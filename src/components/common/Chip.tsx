@@ -5,11 +5,9 @@ interface ChipProps {
   label: string;
 }
 
-const Chip: FunctionComponent<ChipProps> = ({ label }) => (
+export const Chip: FunctionComponent<ChipProps> = ({ label }) => (
   <ChipText>{label}</ChipText>
 );
-
-export default Chip;
 
 const ChipText = styled.p`
   font-size: 0.7rem;

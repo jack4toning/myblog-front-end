@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Chip from '../common/Chip';
+import { Chip } from '../common';
 
 interface BlogProps {
   blog: any;

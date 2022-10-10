@@ -1,26 +1,46 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Header, SearchBar, Blogs } from '../../components';
+import { Header, SearchBar, Blogs, EmptyList } from '../../components';
 import axios from 'axios';
 import { blogUrl } from '../../config/API';
 
 interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
-  const [value, setValue] = useState('');
-  const [blogs, setBlogs] = useState();
+  const [searchKey, setSearchKey] = useState('');
+  const [blogs, setBlogs] = useState<Array<any> | undefined>();
+  const [filteredBlogs, setFilteredBlogs] = useState<Array<any> | undefined>();
 
   useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  useEffect(() => {
+    const trimedKey = searchKey.trim();
+    if (blogs && trimedKey)
+      setFilteredBlogs(
+        blogs.filter(blog =>
+          blog.category.toLowerCase().includes(searchKey.toLowerCase().trim())
+        )
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blogs]);
+
+  const fetchBlogs = () => {
     axios.get(blogUrl as string).then(res => {
       const { data, errorNum } = res.data;
       if (errorNum === 0) setBlogs(data);
     });
-  }, []);
+  };
 
   const clearSearch = () => {
-    setValue('');
+    setSearchKey('');
+    setFilteredBlogs(undefined);
   };
-  const formSubmit = () => {
-    axios.get(blogUrl as string);
+
+  const handleSearchSubmit = (e: any) => {
+    e.preventDefault();
+    fetchBlogs();
+    if (!searchKey.trim()) setFilteredBlogs(undefined);
   };
 
   return (
@@ -29,13 +49,21 @@ const Home: FunctionComponent<HomeProps> = () => {
       <Header />
       {/* Search bar */}
       <SearchBar
-        value={value}
-        setValue={setValue}
+        value={searchKey}
+        setSearchKey={setSearchKey}
         clearSearch={clearSearch}
-        formSubmit={formSubmit}
+        handleSearchSubmit={handleSearchSubmit}
       />
       {/* Blog list */}
-      <Blogs blogs={blogs} />
+      {filteredBlogs ? (
+        filteredBlogs.length < 1 ? (
+          <EmptyList />
+        ) : (
+          <Blogs blogs={filteredBlogs} />
+        )
+      ) : (
+        <Blogs blogs={blogs} />
+      )}
     </div>
   );
 };

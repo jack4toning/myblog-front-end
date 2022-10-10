@@ -3,26 +3,26 @@ import styled from 'styled-components';
 
 interface SearchBarProps {
   value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  setSearchKey: Dispatch<SetStateAction<string>>;
   clearSearch: () => void;
-  formSubmit: () => void;
+  handleSearchSubmit: (e: any) => void;
 }
 
 const SearchBar: FunctionComponent<SearchBarProps> = ({
   value,
-  setValue,
+  setSearchKey,
   clearSearch,
-  formSubmit,
+  handleSearchSubmit,
 }) => {
   return (
     <Container>
-      <Form onSubmit={formSubmit}>
+      <Form onSubmit={handleSearchSubmit}>
         <Input
           type='text'
           placeholder='Search By Category'
           value={value}
           onChange={e => {
-            setValue(e.target.value);
+            setSearchKey(e.target.value);
           }}
         />
         {value && <Span onClick={clearSearch}>X</Span>}

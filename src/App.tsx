@@ -5,7 +5,7 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import { Home, Blog } from './pages';
+import { Home, BlogDetails } from './pages';
 import './App.css';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/blogs' element={<Navigate to='/' replace />} />
-          <Route path='/blogs/:id' element={<Blog />} />
+          <Route path='/blogs/:id' element={<BlogDetails />} />
           <Route path='/blogs/edit/:id' element={<Home />} />
           <Route path='/signIn' element={<Home />} />
           <Route path='/signUp' element={<Home />} />

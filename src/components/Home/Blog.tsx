@@ -1,7 +1,7 @@
-import { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { Chip } from '../common';
+import { FunctionComponent } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { Chip } from "../common";
 
 interface BlogProps {
   blog: any;
@@ -23,21 +23,22 @@ const Blog: FunctionComponent<BlogProps> = ({ blog }) => {
 
   return (
     <Container>
-      <Cover src={coverUrl} alt={'cover'} />
+      <Cover src={coverUrl} alt={"cover"} />
       <Chip label={category} />
       <Title>{title}</Title>
       <Content>{content}</Content>
       <Footer>
         <Author>
-          <Avatar src={avatarUrl} alt={'avatar'} />
+          <Avatar src={avatarUrl} alt={"avatar"} />
           <div>
             <h6>{username}</h6>
             <Createtime>{createtime}</Createtime>
           </div>
         </Author>
         <Link
-          style={{ textDecoration: 'none', color: 'inherit' }}
-          to={`/blogs/${id}`}>
+          style={{ textDecoration: "none", color: "inherit" }}
+          to={`/blogs/${id}`}
+        >
           →
         </Link>
       </Footer>

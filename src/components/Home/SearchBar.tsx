@@ -1,5 +1,5 @@
-import { Dispatch, FunctionComponent, SetStateAction } from 'react';
-import styled from 'styled-components';
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
+import styled from "styled-components";
 
 interface SearchBarProps {
   value: string;
@@ -18,10 +18,10 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
     <Container>
       <Form onSubmit={handleSearchSubmit}>
         <Input
-          type='text'
-          placeholder='Search By Category'
+          type="text"
+          placeholder="Search By Category"
           value={value}
-          onChange={e => {
+          onChange={(e) => {
             setKeyword(e.target.value);
           }}
         />

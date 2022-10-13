@@ -1,20 +1,20 @@
-import { FunctionComponent, useEffect, useState, CSSProperties } from 'react';
-import { Header, SearchBar, BlogList, EmptyList } from '../../components';
-import { blogUrl } from '../../config/API';
-import { fetchRCblogListActionCreator } from '../../state/slices';
-import { useSelector } from '../../state/hooks';
-import { useDispatch } from 'react-redux';
-import HashLoader from 'react-spinners/HashLoader';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBug } from '@fortawesome/free-solid-svg-icons';
+import { FunctionComponent, useEffect, useState, CSSProperties } from "react";
+import { Header, SearchBar, BlogList, EmptyList } from "../../components";
+import { blogUrl } from "../../config/API";
+import { fetchRCblogListActionCreator } from "../../state/slices";
+import { useSelector } from "../../state/hooks";
+import { useDispatch } from "react-redux";
+import HashLoader from "react-spinners/HashLoader";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBug } from "@fortawesome/free-solid-svg-icons";
 
 interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState("");
   const { blogList, isLoading, error } = useSelector(
-    state => state.recommendedBlogList
+    (state) => state.recommendedBlogList
   );
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ const Home: FunctionComponent<HomeProps> = () => {
   };
 
   const clearSearch = () => {
-    setKeyword('');
+    setKeyword("");
   };
 
   const handleSearchSubmit = (e: any) => {
@@ -40,8 +40,8 @@ const Home: FunctionComponent<HomeProps> = () => {
   };
 
   const override: CSSProperties = {
-    display: 'block',
-    margin: '0 auto',
+    display: "block",
+    margin: "0 auto",
   };
 
   // if (error) return <Error error={error} />;
@@ -62,11 +62,11 @@ const Home: FunctionComponent<HomeProps> = () => {
         <HashLoader
           loading={isLoading}
           cssOverride={override}
-          color={'#0f52ba'}
+          color={"#0f52ba"}
         />
       ) : error ? (
         <Error>
-          <FontAwesomeIcon icon={faBug} color={'#f50202'} />
+          <FontAwesomeIcon icon={faBug} color={"#f50202"} />
           <ErrorText>{error}</ErrorText>
         </Error>
       ) : blogList ? (

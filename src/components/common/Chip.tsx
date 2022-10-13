@@ -1,5 +1,5 @@
-import { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import { FunctionComponent } from "react";
+import styled from "styled-components";
 
 interface ChipProps {
   label: string;
@@ -17,4 +17,5 @@ const ChipText = styled.p`
   border-radius: 5px;
   width: fit-content;
   text-transform: capitalize;
+  /* margin-right: 0.5rem; */
 `;

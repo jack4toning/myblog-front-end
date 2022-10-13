@@ -1,14 +1,24 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { fetchRCblogListActionCreator } from '../../state/slices';
+import { blogUrl } from '../../config/API';
 
 interface HeaderProps {}
 
 const Header: FunctionComponent<HeaderProps> = () => {
+  const dispatch = useDispatch();
+
+  const fetchBlogs = () => {
+    dispatch<any>(fetchRCblogListActionCreator(blogUrl));
+  };
+
   return (
     <Container>
       <Header2>Inc. This morning</Header2>
       <Header1>
-        <Span>“</Span> Blog <Span>”</Span>
+        <Span>“</Span> <BlogText onClick={fetchBlogs}>Blog</BlogText>{' '}
+        <Span>”</Span>
       </Header1>
       <Para>
         awesome place to make oneself <br /> productive and entertained through
@@ -42,4 +52,8 @@ const Span = styled.span`
 const Para = styled.p`
   color: #a9a9a9;
   font-weight: 500;
+`;
+
+const BlogText = styled.span`
+  cursor: pointer; ;
 `;

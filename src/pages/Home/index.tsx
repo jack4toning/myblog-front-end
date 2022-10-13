@@ -1,47 +1,50 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { Header, SearchBar, Blogs, EmptyList } from '../../components';
-import axios from 'axios';
+import { FunctionComponent, useEffect, useState, CSSProperties } from 'react';
+import { Header, SearchBar, BlogList, EmptyList } from '../../components';
 import { blogUrl } from '../../config/API';
+import { fetchRCblogListActionCreator } from '../../state/slices';
+import { useSelector } from '../../state/hooks';
+import { useDispatch } from 'react-redux';
+import HashLoader from 'react-spinners/HashLoader';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBug } from '@fortawesome/free-solid-svg-icons';
 
 interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
-  const [searchKey, setSearchKey] = useState('');
-  const [blogs, setBlogs] = useState<Array<any> | undefined>();
-  const [filteredBlogs, setFilteredBlogs] = useState<Array<any> | undefined>();
+  const [keyword, setKeyword] = useState('');
+  const { blogList, isLoading, error } = useSelector(
+    state => state.recommendedBlogList
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const trimedKey = searchKey.trim();
-    if (blogs && trimedKey)
-      setFilteredBlogs(
-        blogs.filter(blog =>
-          blog.category.toLowerCase().includes(searchKey.toLowerCase().trim())
-        )
-      );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blogs]);
-
   const fetchBlogs = () => {
-    axios.get(blogUrl as string).then(res => {
-      const { data, errorNum } = res.data;
-      if (errorNum === 0) setBlogs(data);
-    });
+    const trimedKeyword = keyword.trim();
+    const url = `${blogUrl}?keyword=${trimedKeyword}`;
+
+    dispatch<any>(fetchRCblogListActionCreator(url));
   };
 
   const clearSearch = () => {
-    setSearchKey('');
-    setFilteredBlogs(undefined);
+    setKeyword('');
   };
 
   const handleSearchSubmit = (e: any) => {
     e.preventDefault();
     fetchBlogs();
-    if (!searchKey.trim()) setFilteredBlogs(undefined);
   };
+
+  const override: CSSProperties = {
+    display: 'block',
+    margin: '0 auto',
+  };
+
+  // if (error) return <Error error={error} />;
 
   return (
     <div>
@@ -49,23 +52,41 @@ const Home: FunctionComponent<HomeProps> = () => {
       <Header />
       {/* Search bar */}
       <SearchBar
-        value={searchKey}
-        setSearchKey={setSearchKey}
+        value={keyword}
+        setKeyword={setKeyword}
         clearSearch={clearSearch}
         handleSearchSubmit={handleSearchSubmit}
       />
       {/* Blog list */}
-      {filteredBlogs ? (
-        filteredBlogs.length < 1 ? (
-          <EmptyList />
-        ) : (
-          <Blogs blogs={filteredBlogs} />
-        )
+      {isLoading ? (
+        <HashLoader
+          loading={isLoading}
+          cssOverride={override}
+          color={'#0f52ba'}
+        />
+      ) : error ? (
+        <Error>
+          <FontAwesomeIcon icon={faBug} color={'#f50202'} />
+          <ErrorText>{error}</ErrorText>
+        </Error>
+      ) : blogList ? (
+        <BlogList blogs={blogList} />
       ) : (
-        <Blogs blogs={blogs} />
+        <EmptyList />
       )}
+      {/* {blogList ? <BlogList blogs={blogList} /> : <EmptyList />} */}
     </div>
   );
 };
 
 export { Home };
+
+const Error = styled.div`
+  width: fit-content;
+  margin: 0 auto;
+`;
+
+const ErrorText = styled.span`
+  display: inline-block;
+  margin-left: 0.5rem;
+`;

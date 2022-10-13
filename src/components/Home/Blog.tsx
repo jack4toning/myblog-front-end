@@ -12,7 +12,6 @@ const Blog: FunctionComponent<BlogProps> = ({ blog }) => {
     id,
     title,
     category,
-    subCategory,
     content,
     avatarUrl,
     username,

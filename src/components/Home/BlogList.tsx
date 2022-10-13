@@ -2,11 +2,11 @@ import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Blog } from './Blog';
 
-interface BlogsProps {
+interface BlogListProps {
   blogs: any[] | undefined;
 }
 
-const Blogs: FunctionComponent<BlogsProps> = ({ blogs }) => {
+const BlogList: FunctionComponent<BlogListProps> = ({ blogs }) => {
   return (
     <Container>
       {blogs && blogs.map(blog => <Blog blog={blog} key={blog.id} />)}
@@ -14,7 +14,7 @@ const Blogs: FunctionComponent<BlogsProps> = ({ blogs }) => {
   );
 };
 
-export { Blogs };
+export { BlogList };
 
 const Container = styled.div`
   display: grid;

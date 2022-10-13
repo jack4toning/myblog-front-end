@@ -3,14 +3,14 @@ import styled from 'styled-components';
 
 interface SearchBarProps {
   value: string;
-  setSearchKey: Dispatch<SetStateAction<string>>;
+  setKeyword: Dispatch<SetStateAction<string>>;
   clearSearch: () => void;
   handleSearchSubmit: (e: any) => void;
 }
 
 const SearchBar: FunctionComponent<SearchBarProps> = ({
   value,
-  setSearchKey,
+  setKeyword,
   clearSearch,
   handleSearchSubmit,
 }) => {
@@ -22,7 +22,7 @@ const SearchBar: FunctionComponent<SearchBarProps> = ({
           placeholder='Search By Category'
           value={value}
           onChange={e => {
-            setSearchKey(e.target.value);
+            setKeyword(e.target.value);
           }}
         />
         {value && <Span onClick={clearSearch}>X</Span>}

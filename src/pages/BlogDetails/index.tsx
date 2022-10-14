@@ -104,6 +104,7 @@ const CustomLink = styled(Link)`
   font-size: 0.8rem;
   color: #a9a9a9;
   font-weight: 500;
+  margin-bottom: 2rem;
   display: block;
 `;
 

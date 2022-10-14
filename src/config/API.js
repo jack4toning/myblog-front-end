@@ -1,4 +1,4 @@
-const APIServer = 'http://localhost';
+const APIServer = "http://localhost";
 
 const blogUrl = `${APIServer}/api/blogs`;
 const loginUrl = `${APIServer}/api/login`;
